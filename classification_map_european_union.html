@@ -556,7 +556,7 @@ dropShadowFilter.append('svg:feBlend')
       .range([ 0, width ]);
     svg.append("g")
       .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x).ticks(5).tickFormat(function(date){
+      .call(d3.axisBottom(x).ticks(7).tickFormat(function(date){
              return d3.timeFormat('%b')(date);
       }));
       if (d3.max(data10, function(d) { return +d.value; })>d3.max(data110, function(d) { return +d.value; })) {
