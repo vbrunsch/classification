@@ -1,4 +1,4 @@
-
+#https://data.rivm.nl/covid-19/COVID-19_aantallen_gemeente_cumulatief.json
 
 
 
@@ -23,7 +23,7 @@ os.makedirs(output_directory + '/classification', exist_ok=True)
 use_canned_file = False
 
 #Import data from source
-data = pd.read_json('https://data.rivm.nl/covid-19/COVID-19_aantallen_gemeente_cumulatief.json')
+data = pd.read_json('COVID-19_aantallen_gemeente_cumulatief.json')
 #print(data['Date_of_report'])
 kkeys0={}
 for item in data.iterrows():
@@ -31,7 +31,7 @@ for item in data.iterrows():
         kkeys0[item[1]["Municipality_code"]]=item[1]["Municipality_name"]+", "+item[1]["Province"]
 
 print(kkeys0)
-df1 = data['Date_of_report'].str.contains("2020-04-15") 
+df1 = data['Date_of_report'].str.contains("2021-07-18") 
 today = data[df1]
 
 #Getting list of dates over which reports have been made:
