@@ -43,6 +43,12 @@ today['Total_reported']
 #scratch, good for visuals
 data.head()
 
+data['Combined_Key']=data['Municipality_code']
+data=data[data['Municipality_code'].notnull()]
+#data[data["Municipality_code"]!="None"]                                                                                                                                             
+print(data)
+total=data.pivot(index='Combined_Key',columns='Date_of_report',values='Total_reported')
+'''
 #reformating file to create JHU-style dataframe
 total = today[ ['Province','Municipality_code']]
 total["Combined_Key"]=total["Municipality_code"]
@@ -59,7 +65,7 @@ for date in dates:
 #total["Combined"]=total["Municipality_name"]+", "+total["Province"]
 #scratch
 print(total)
-
+'''
 kkeys={}
 for el in list(total.columns):
     if el not in ['Combined_Key']:
@@ -83,9 +89,9 @@ else:
 
 print(data)    
 '''    
-e_dataframe = df1.set_index("Combined_Key")
-ids = df1[["Combined_Key"]].to_dict('records')
-recs = df1["Combined_Key"].to_list()
+e_dataframe = df1#.set_index("Combined_Key")
+ids = list(df1.index)#[["Combined_Key"]].to_dict('records')
+recs = list(df1.index)#df1["Combined_Key"].to_list()
 
 # stage latest Canada HR-level data for later processing
 #latest_ca_df = stage_latest()
@@ -93,7 +99,7 @@ recs = df1["Combined_Key"].to_list()
 #assert latest_ca_df.index.names == ['Combined_Key']
 #print(latest_ca_df)
 
-e_dataframe0 = e_dataframe.drop(columns=['Province','Municipality_code'])
+e_dataframe0 = e_dataframe#.drop(columns=['Province','Municipality_code'])
 e_dataframe1 = e_dataframe0.transpose()
 print(e_dataframe0)
 
@@ -195,7 +201,7 @@ def classify(ratio, recent_mean, threshold):
 for name in counties:
     print(name)
     if name!=None:
-        values = e_dataframe1[name]
+        values = e_dataframe1[name].fillna(0)
         num_rows = len(values)
         y50 = values[-14:]
         y5 = [y - values[-14] for y in y50]
@@ -235,10 +241,10 @@ for name in counties:
                 color="darkgreen"
 
             print(name,color,ratio,recent_mean0,int(max(y5)))    
-            with open(output_directory + '/classification/data_counties_'+str(ids[recs.index(name)]["Combined_Key"])+'.json', 'w') as outfile:
+            with open(output_directory + '/classification/data_counties_'+name+'.json', 'w') as outfile:
                 json.dump({"dates":tim2,"max_14": int(max(y5)-min(y5)),"max":int(max(y)),"value":y3,"time":tim,"original_values":original_values},outfile)
                 #aar.append({"color":color,"province":name.split(",")[0],"country":name.split(",")[1],"id":"new_id_"+str(ind4),"value1":ratio, "dates":tim2,"value":y3})
-                aar1.append({"n":kkeys0[name],"id":ids[recs.index(name)]["Combined_Key"],"v":ratio,"c":color,"max":int(max(y5)-min(y5))})
+                aar1.append({"n":name,"id":name,"v":ratio,"c":color,"max":int(max(y5)-min(y5))})
             ind4+=1
 
 
