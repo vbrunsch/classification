@@ -9,9 +9,9 @@ import geopandas as gpd
 #print(data)
 #data2=pd.pivot_table(data=data,index="fecha_diagnostico",columns='residencia_provincia_nombre', values='sexo').fillna(0)
 #print(data2)
+#https://docs.google.com/spreadsheets/u/1/d/1ierEhD6gcq51HAm433knjnVwey4ZE5DCnu1bW7PRG3E/htmlview?fbclid=IwAR0oqN4ikk1flMvFbb0ecLOKGpkHo7LCYj75N6Z1vc4n_kuhtI214dqN5Ho#
 
-
-df = pd.read_csv('/Users/olgabuchel/Sites/daily_update_covid/Polish_data.csv').set_index("Województwo")
+df = pd.read_csv('/Users/olgabuchel/Downloads/Polish_data.csv').set_index("Województwo")
 kk=df.index
 df=df.T
 dats=[]

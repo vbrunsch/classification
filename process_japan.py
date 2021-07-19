@@ -1,3 +1,7 @@
+
+import os
+#os.system("rm -r /Users/olgabuchel/Downloads/archive")
+#wget https://www.kaggle.com/lisphilar/covid19-dataset-in-japan/download
 #/Users/olgabuchel/Downloads/covid_jpn_prefecture.csv.xls
 #https://www.kaggle.com/lisphilar/covid19-dataset-in-japan?select=covid_jpn_prefecture.csv
 #https://github.com/deldersveld/topojson/blob/master/countries/japan/jp-prefectures.json
@@ -5,10 +9,12 @@
 import numpy as np
 import pandas  as pd
 import json
-import os
+#import os
 from datetime import date
 #from prep_canada_data import stage_latest                                                                                                                                           
-#https://cdn.mbta.com/archive/archived_feeds.txt                                                                                                                                     
+#https://cdn.mbta.com/archive/archived_feeds.txt
+#os.system("rm -r /Users/olgabuchel/Downloads/archive")
+#os.system("wget https://www.kaggle.com/lisphilar/covid19-dataset-in-japan/download") 
 #date_of_analysis='03/07/21'                                                                                                                                                         
 date_of_analysis=date.today().strftime("%m/%d/%y")
 print(date_of_analysis)
@@ -19,7 +25,7 @@ with open("JPN_adm1.json","r") as fp:
         arr.append(item["properties"]["NAME_1"])
 print(arr)
 
-data2=pd.read_csv("/Users/olgabuchel/Downloads/covid_jpn_prefecture.csv.xls")
+data2=pd.read_csv("/Users/olgabuchel/Downloads/archive/covid_jpn_prefecture.csv")
 print(data2)
 for el in list(data2["Prefecture"].unique()):
     try:

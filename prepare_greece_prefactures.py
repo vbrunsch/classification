@@ -8,7 +8,8 @@ from datetime import date
 
 date_of_analysis=date.today().strftime("%m/%d/%y")
 print(date_of_analysis)
-
+os.system("rm prefectures.csv")
+os.system("wget https://raw.githubusercontent.com/Sandbird/covid19-Greece/master/prefectures.csv")
 output_directory = 'output_greece'
 os.makedirs(output_directory + '/classification', exist_ok=True)
 
