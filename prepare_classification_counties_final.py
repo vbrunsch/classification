@@ -146,9 +146,11 @@ for name in counties:
     original_values = compute_original_values(values)
     x = e_dataframe1[e_dataframe1.columns[0]]
     y1 = interpolate(y[500:])
+    y1_ = interpolate(y)
     x2 = x[9:]
     tim2 = tim[3 : -4]
     y3 = pd.DataFrame(y1, columns=["a"]).rolling(window=7).mean()['a'].to_list()[6:]
+    y3_ = pd.DataFrame(y1_, columns=["a"]).rolling(window=7).mean()['a'].to_list()[6:]
     ys = y3[-24:]
     xs = x[-29:-5]  # last 24 days
     ind2 = 0
@@ -179,7 +181,7 @@ for name in counties:
 
         print(name,color,ratio,recent_mean0,int(max(y5)))    
         with open(output_directory + '/classification/data_counties_'+str(ids[recs.index(name)]["UID"])+'.json', 'w') as outfile:
-            json.dump({"dates":tim2,"max_14": int(max(y5)-min(y5)),"max":int(max(y)),"value":y3,"time":tim,"original_values":original_values},outfile)
+            json.dump({"dates":tim2,"max_14": int(max(y5)-min(y5)),"max":int(max(y)),"value":y3_,"time":tim,"original_values":original_values},outfile)
         #aar.append({"color":color,"province":name.split(",")[0],"country":name.split(",")[1],"id":"new_id_"+str(ind4),"value1":ratio, "dates":tim2,"value":y3})
         aar1.append({"n":name,"id":ids[recs.index(name)]["UID"],"v":ratio,"c":color,"max":int(max(y5)-min(y5))})
         ind4+=1
