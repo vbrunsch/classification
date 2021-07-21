@@ -137,7 +137,8 @@ def classify(ratio, recent_mean, threshold):
     return color
 
 for name in counties:
-    values = e_dataframe1[name]
+    values = e_dataframe1[name][515:]
+    print(len(values))
     num_rows = len(values)
     y50 = values[-15:]
     y5 = [y - values[-15] for y in y50]
@@ -178,7 +179,7 @@ for name in counties:
 
         print(name,color,ratio,recent_mean0,int(max(y5)))    
         with open(output_directory + '/classification/data_counties_'+str(ids[recs.index(name)]["UID"])+'.json', 'w') as outfile:
-            json.dump({"dates":tim2,"max_14": int(max(y5)-min(y5)),"max":int(max(y)),"value":y3,"time":tim,"original_values":original_values},outfile)
+            json.dump({"dates":tim2[515:],"max_14": int(max(y5)-min(y5)),"max":int(max(y)),"value":y3,"time":tim[515:],"original_values":original_values},outfile)
         #aar.append({"color":color,"province":name.split(",")[0],"country":name.split(",")[1],"id":"new_id_"+str(ind4),"value1":ratio, "dates":tim2,"value":y3})
         aar1.append({"n":name,"id":ids[recs.index(name)]["UID"],"v":ratio,"c":color,"max":int(max(y5)-min(y5))})
         ind4+=1
