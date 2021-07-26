@@ -656,25 +656,25 @@ function draw_plot(data,color) {
     }
    //console.log(data110.map(function(d){ return d.value}),data10.map(function(d){ return d.value}));
     var margin = {top: 25, right: 20, bottom: 20, left: 45},
-    width = 250 - margin.left - margin.right,
+    width = 350-margin.left - margin.right,
     height = window.innerHeight*0.3 - margin.top - margin.bottom;
     
     var svg = d3.select("#plot")
   .append("svg")
-    .attr("width", width + margin.left + margin.right)
+	.attr("width", width)// + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
-d3.select(".map-overlay").attr("height",Number(height)+" !important");
+//d3.select(".map-overlay").attr("height",Number(height)+" !important");
     var defs = svg.append("defs");
 
 
 var dropShadowFilter = defs.append('svg:filter')
   .attr('id', 'drop-shadow')
   .attr('filterUnits', "userSpaceOnUse")
-  .attr('width', '250%')
-  .attr('height', '250%');
+  .attr('width',  width)
+  .attr('height', height);
 dropShadowFilter.append('svg:feGaussianBlur')
   .attr('in', 'SourceGraphic')
   .attr('stdDeviation', 2)

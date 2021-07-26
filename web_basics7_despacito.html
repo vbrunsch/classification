@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Web Audio Basics</title>
+  <meta name="description" content="Audio basics demo for Web Audio API">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="https://d3js.org/d3.v4.js"></script>
+
+<!-- Function for radial charts -->
+<script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3-scale-radial.js"></script>
+
+</head>
+<body>
+  <!----
+<audio controls>
+  <source src="audio-basics_outfoxing.mp3" type="audio/mpeg">
+  <source src="audiofile.ogg" type="audio/ogg">
+  <!-- fallback for non supporting browsers goes here -->
+  <!---- <p>Your browser does not support HTML5 audio, but you can still
+     <a href="audio-basics_outfoxing.mp3">download the music</a>.</p>
+</audio>--->
+<div id="my-house" width="300" height="300"></div>
+<script>
+ var margin = {top: 20, right: 10, bottom: 20, left: 10};
+    
+    var width = 960 - margin.left - margin.right,
+    	height = 900 - margin.top - margin.bottom;
+    
+    var svg = d3.select("#my-house").append("svg")
+    	.attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    
+    var g = svg.append("g")
+    	.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+    
+    var innerRadius = 100,
+        outerRadius = Math.min(width, height) / 2 - 6;
+    /*
+    var parseTime = d3.timeParse("%d-%b-%y");
+    
+    var formatMonth = d3.timeFormat("%b");
+    */
+    var fullCircle = 2 * Math.PI;
+    
+    var x = d3.scaleLinear()
+        .range([0, fullCircle]);
+  
+    
+    var y = d3.scaleRadial()
+    		.range([innerRadius, outerRadius]);
+    
+    var line = d3.lineRadial()
+    		.angle(function(d) { return x(d.d); })
+    		.radius(function(d) { return y(d.c); });
+   var data=[];
+
+  d3.json("MFCC_despacitoT.json" ,/*function(d) {
+      var dat=[];
+      for (var n=0; n<d.length; n++){
+      var temp={};
+      temp.Date = n;
+      temp.Close = d[n][0];
+      n+=1;
+	  dat.push(temp);
+//	  console.log(temp,dat);
+      }
+      //console.log(dat);
+      data=dat;
+      return dat;
+    },*/ function(error, d) {
+      data=d;
+
+//	console.log(error,data0);
+
+      x.domain(d3.extent(data, function(d) { return +d.d; }));
+  		y.domain(d3.extent(data, function(d) { return +d.c; }));
+      
+/*      var linePlot = g.append("path")
+      	.datum(data)
+        .attr("fill", "none")
+        .attr("stroke", "#4099ff")
+        .attr("d", line);
+  */    
+      var yAxis = g.append("g")
+          .attr("text-anchor", "middle");
+
+      var yTick = yAxis
+        .selectAll("g")
+        .data(y.ticks(5))
+        .enter().append("g");
+      
+  /*    yTick.append("circle")
+          .attr("fill", "none")
+          .attr("stroke", "black")
+      		.attr("opacity", 0.2)
+          .attr("r", y);
+      
+      yAxis.append("circle")
+      		.attr("fill", "none")
+          .attr("stroke", "black")
+      		.attr("opacity", 0.2)
+          .attr("r", function() { return y(y.domain()[0])});
+    */  
+      var labels = yTick.append("text")
+          .attr("y", function(d) { return -y(d); })
+          .attr("dy", "0.35em")
+          .attr("fill", "none")
+          .attr("stroke", "#fff")
+          .attr("stroke-width", 5)
+          .attr("stroke-linejoin", "round")
+          .text(function(d) { return "$" + d; });
+
+/*      yTick.append("text")
+        .attr("y", function(d) { return -y(d); })
+        .attr("dy", "0.35em")
+        .text(function(d) { return "$" + d; });
+*/
+	/*
+      var xAxis = g.append("g");
+  
+      var xTick = xAxis
+        .selectAll("g")
+        .data(x.ticks(12))
+        .enter().append("g")
+          .attr("text-anchor", "middle")
+          .attr("transform", function(d) {
+            return "rotate(" + ((x(d)) * 180 / Math.PI - 90) + ")translate(" + innerRadius + ",0)";
+          });
+      
+      xTick.append("line")
+        .attr("x2", -5)
+        .attr("stroke", "#000");
+*/
+    /*  xTick.append("text")
+        .attr("transform", function(d) { 
+        var angle = x(d);
+        return ((angle < Math.PI / 2) || (angle > (Math.PI * 3 / 2))) ? "rotate(90)translate(0,22)" : "rotate(-90)translate(0, -15)"; })
+        .text(function(d) { 
+          return d;
+        })
+      	.style("font-size", 10)
+      	.attr("opacity", 0.6)
+      */
+      var title = g.append("g")
+      		.attr("class", "title")
+      		.append("text")
+      		.attr("dy", "-0.2em")
+      		.attr("text-anchor", "middle")
+      		.text("Despacito")
+      
+      var subtitle = g.append("text")
+      		.attr("dy", "1em")
+          .attr("text-anchor", "middle")
+      		.attr("opacity", 0.6)
+      		.text("");  
+//.attr('cx', innerRadius*Math.sin(ALI))                                                                                                                                           
+  //  .attr('cy', innerRadius*Math.cos(ALI))    
+
+	var color=d3.scaleLinear().domain([-482.24396,-200,-100,-25,0,25,100,200,264.55063])
+	    .range(["#67001f","#d6604d","#ef8a62","#fddbc7","#f7f7f7","#d1e5f0","#67a9cf","#4393c3","#2166ac"].reverse())
+	var rr=d3.scaleLinear().domain([-483,-20,0,25,100,250])
+            .range([3,4,5,7,10,12])
+	    g.selectAll(".circle1")
+            .data(data)
+            .enter()
+            .append("circle")
+      	    .attr("class","circle1")
+	    .attr('cx',function(d,i){return d.x;})
+            .attr('cy', function(d,i){return d.y;})
+            .attr('r',function(d,i){return rr(d.c);})//function(d,i){return rr(Math.abs(d.c))})//+k.toString()]/d3.max(data.map(function(f){return f["Close"+k.toString()]}))*10;})
+            .style('fill', function(d){return color(d.c)})
+            .style('stroke-width', function(d){if (rr(d.c)<3.5) {return 0.01} else {return 0.01}})
+           .style('stroke', "black")	    .style('fill-opacity', 0.4); //function(d,i){return d["Close1"]/d3.max(data.map(function(f){return f["Close1"]}))});//+k.toString()]/d3.max(data.map(function(f){return f["Close"+k.toString()]}));});
+	
+
+  //    var lineLength = linePlot.node().getTotalLength();
+      
+  /*    linePlot
+        .attr("stroke-dasharray", lineLength + " " + lineLength)
+        .attr("stroke-dashoffset", -lineLength)
+        .transition()
+          .duration(2000)
+          .ease(d3.easeLinear)
+          .attr("stroke-dashoffset", 0);
+*/
+      
+    });
+
+	  
+</script>
+
+</body>
+</html>
