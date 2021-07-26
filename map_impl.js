@@ -661,7 +661,7 @@ function draw_plot(data,color) {
     
     var svg = d3.select("#plot")
   .append("svg")
-	.attr("width", width)// + margin.left + margin.right)
+	.attr("width", width + margin.left/2)//margin.right
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
     .attr("transform",
@@ -673,7 +673,7 @@ function draw_plot(data,color) {
 var dropShadowFilter = defs.append('svg:filter')
   .attr('id', 'drop-shadow')
   .attr('filterUnits', "userSpaceOnUse")
-  .attr('width',  width)
+    .attr('width',  width + margin.left/2)// + margin.right)
   .attr('height', height);
 dropShadowFilter.append('svg:feGaussianBlur')
   .attr('in', 'SourceGraphic')
@@ -697,7 +697,7 @@ dropShadowFilter.append('svg:feBlend')
     // Add X axis --> it is a date format
     var x = d3.scaleTime()
       .domain(d3.extent(data10, function(d) { return d.date; }))
-      .range([ 0, width ]);
+      .range([ 0, width-margin.left ]);
     svg.append("g")
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(x).ticks(5).tickFormat(function(date){
@@ -740,7 +740,7 @@ dropShadowFilter.append('svg:feBlend')
        // .style("filter", "url(#drop-shadow)");
     
     var curtain = svg.append('rect')
- .attr('x', -1 * width)
+	.attr('x', -1 * (width-margin.left))
  .attr('y', -1 * height)
  .attr('height', height+20)
  .attr('width', width-2)
