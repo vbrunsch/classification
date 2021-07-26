@@ -661,7 +661,7 @@ function draw_plot(data,color) {
     
     var svg = d3.select("#plot")
   .append("svg")
-	.attr("width", width + margin.left/2)//margin.right
+	.attr("width", width + margin.left+margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
     .attr("transform",
