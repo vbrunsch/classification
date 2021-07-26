@@ -645,17 +645,7 @@ function draw_plot(data,color) {
     
  var data10=[];
     
-    for (var i=1; i<data["time"].length; i++) {
-        if (data["original_values"][i]>=0){
-            var val=data["original_values"][i];
-        } else {
-            var val=0;
-        }
-        var temp={"date":new Date(Number(data["time"][i].split("/")[2]),Number(data["time"][i].split("/")[0])-1,Number(data["time"][i].split("/")[1])),"value":val};
-        data10.push(temp);
-    }
-   //console.log(data110.map(function(d){ return d.value}),data10.map(function(d){ return d.value}));
-    var margin = {top: 25, right: 20, bottom: 20, left: 60},
+    },
     width = 350-margin.left - margin.right,
     height = window.innerHeight*0.3 - margin.top - margin.bottom;
     
