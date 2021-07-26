@@ -655,7 +655,7 @@ function draw_plot(data,color) {
         data10.push(temp);
     }
    //console.log(data110.map(function(d){ return d.value}),data10.map(function(d){ return d.value}));
-    var margin = {top: 25, right: 20, bottom: 20, left: 45},
+    var margin = {top: 25, right: 20, bottom: 20, left: 50},
     width = 350-margin.left - margin.right,
     height = window.innerHeight*0.3 - margin.top - margin.bottom;
     
