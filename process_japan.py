@@ -25,7 +25,7 @@ with open("JPN_adm1.json","r") as fp:
         arr.append(item["properties"]["NAME_1"])
 print(arr)
 
-data2=pd.read_csv("/Users/olgabuchel/Downloads/archive/covid_jpn_prefecture.csv")
+data2=pd.read_csv("/Users/olgabuchel/Downloads/covid_jpn_prefecture.csv")
 print(data2)
 for el in list(data2["Prefecture"].unique()):
     try:
