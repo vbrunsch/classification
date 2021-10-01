@@ -48,7 +48,7 @@ for x in range(4,12):
             y="0"+str(y)
         if str(y)+"-"+str(x)+"-"+"2020" not in ["31-04-2020","31-06-2020","31-09-2020"]:    
             dates.append(str(y)+"-"+str(x)+"-"+"2020")
-for x in range(1,6):
+for x in range(1,10):
     if x<10:
         x="0"+str(x)
     for y in range(1,32):
