@@ -43,6 +43,7 @@ fig, ax = plt.subplots()
 plt.xticks(rotation=70)
 #x=[str(x) for x in df0["Date"].to_list()]
 #plt.plot(x,y,label='All deaths')
+'''
 plt.plot(range(0,12),y[:12],label='2015')
 plt.plot(range(0,12),y[12:24],label='2016')
 plt.plot(range(0,12),y[24:36],label='2017')
@@ -51,9 +52,23 @@ plt.plot(range(0,12),y[48:60],label='2019')
 plt.plot(range(0,12),y[60:72],label='2020')
 #print(sum(y[60:72]))
 plt.plot(range(0,6),y[72:78],label='2021')
+'''
+
+plt.plot(range(2015,2022),[sum(y[:12]),sum(y[12:24]),sum(y[24:36]),sum(y[36:48]),sum(y[48:60]),sum(y[60:72]),sum(y[72:78])],label='My dataset')
+'''
+Year	Death Rate	Growth Rate
+2021	6.320	1.460%
+2020	6.229	1.470%
+2019	6.139	1.490%
+2018	6.049	-0.640%
+2017	6.088	-0.620%
+2016	6.126	-0.630%
+2015	6.165
+'''
+plt.plot(range(2015,2022),[6.165*4995,6.126*4995,6.088*4995,6.049*4995,6.139*4995,6.229*4995,6.320*4995],label='Your dataset')
 #print(y[:12],y[72:])
 
-plt.title(country+" (grouped by months)")
+plt.title(country+" (grouped by years)")
 #plt.locator_params(axis='x', nbins=20)
 #fig, ax = plt.subplots()
 #print(x)
