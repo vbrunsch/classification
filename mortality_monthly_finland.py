@@ -74,8 +74,8 @@ print(y[:12],y[72:])
 2015	9.619	0.380%
 
 '''
-plt.plot(range(2015,2022),[sum(y[:12]),sum(y[12:24]),sum(y[24:36]),sum(y[36:48]),sum(y[48:60]),sum(y[60:72]),sum(y[72:81])],label='My dataset')
-plt.plot(range(2015,2022),[9.619*5531,9.656*5531,9.692*5531,9.728*5531,9.795*5531,9.862*5531,9.929*5531],label='Your dataset')
+plt.plot(range(2015,2022),[sum(y[:12]),sum(y[12:24]),sum(y[24:36]),sum(y[36:48]),sum(y[48:60]),sum(y[60:72]),sum(y[72:81])],label='EM dataset')
+plt.plot(range(2015,2022),[9.619*5531,9.656*5531,9.692*5531,9.728*5531,9.795*5531,9.862*5531,9.929*5531],label='Macrotrends dataset')
 plt.title(country+" (grouped by years)")
 #plt.locator_params(axis='x', nbins=20)
 #fig, ax = plt.subplots()

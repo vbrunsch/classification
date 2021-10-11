@@ -54,7 +54,7 @@ plt.plot(range(0,12),y[60:72],label='2020')
 plt.plot(range(0,6),y[72:78],label='2021')
 '''
 
-plt.plot(range(2015,2022),[sum(y[:12]),sum(y[12:24]),sum(y[24:36]),sum(y[36:48]),sum(y[48:60]),sum(y[60:72]),sum(y[72:78])],label='My dataset')
+plt.plot(range(2015,2022),[sum(y[:12]),sum(y[12:24]),sum(y[24:36]),sum(y[36:48]),sum(y[48:60]),sum(y[60:72]),sum(y[72:78])],label='EM dataset')
 '''
 Year	Death Rate	Growth Rate
 2021	6.320	1.460%
@@ -65,7 +65,7 @@ Year	Death Rate	Growth Rate
 2016	6.126	-0.630%
 2015	6.165
 '''
-plt.plot(range(2015,2022),[6.165*4995,6.126*4995,6.088*4995,6.049*4995,6.139*4995,6.229*4995,6.320*4995],label='Your dataset')
+plt.plot(range(2015,2022),[6.165*4995,6.126*4995,6.088*4995,6.049*4995,6.139*4995,6.229*4995,6.320*4995],label='Macrotrends dataset')
 #print(y[:12],y[72:])
 
 plt.title(country+" (grouped by years)")

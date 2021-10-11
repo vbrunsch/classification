@@ -43,6 +43,7 @@ fig, ax = plt.subplots()
 plt.xticks(rotation=70)
 #x=[str(x) for x in df0["Date"].to_list()]
 #plt.plot(x,y,label='All deaths')
+
 plt.plot(range(0,12),y[:12],label='2015')
 plt.plot(range(0,12),y[12:24],label='2016')
 plt.plot(range(0,12),y[24:36],label='2017')
@@ -101,16 +102,16 @@ import seaborn as sns
 #plt.setp(labels, rotation=90)
 '''
 #plt.xticks(rotation=70)
-#####plt.plot(x1, y1,label='Deaths from COVID-19')
+plt.plot(x1, y1,label='Deaths from COVID-19')
 #plt.title(country)
 #plt.xticks(x1,y1)                                                                                                                                                                  plt.xticks(rotation=70) 
 #locs, labels = plt.xticks()
-'''
+
 every_nth = 10
 for n, label in enumerate(ax.xaxis.get_ticklabels()):
     if n % every_nth != 0:
         label.set_visible(False)  
 #plt.setp(labels, rotation=90)
-'''
+
 plt.legend()
 plt.show()
