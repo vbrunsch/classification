@@ -30,32 +30,59 @@ url = 'https://sisa.msal.gov.ar/datos/descargas/covid-19/files/Covid19Casos.csv'
 output_directory = 'output_argentina'
 os.makedirs(output_directory + '/classification', exist_ok=True)
 #pd.read_csv('filename.tar.gz', compression='gzip', header=0, sep=',', quotechar='"')
-url='/Users/olgabuchel/Downloads/Covid19Casos.csv'
+url='/Users/olgabuchel/Downloads/Covid19Casos.zip'
+csvfile=pd.read_csv(url,compression="zip")
 all_data=[]
-kkeys=[]
+kkeys=['id_evento_caso', 'sexo', 'edad', 'edad_años_meses', 'residencia_pais_nombre', 'residencia_provincia_nombre', 'residencia_departamento_nombre', 'carga_provincia_nombre', 'fecha_inicio_sintomas', 'fecha_apertura', 'sepi_apertura', 'fecha_internacion', 'cuidado_intensivo', 'fecha_cui_intensivo', 'fallecido', 'fecha_fallecimiento', 'asistencia_respiratoria_mecanica', 'carga_provincia_id', 'origen_financiamiento', 'Clasificacion', 'clasificacion_resumen', 'residencia_provincia_id', 'fecha_diagnostico', 'residencia_departamento_id', 'ultima_actualizacion']
 lists={}
 #with open(url, 'r', encoding='utf-16', newline='') as csvfile:
 #url='/UOBsers/olgabuchel/Downloads/Covid19Casos-2.csv'
-with open(url, 'r', encoding='utf-8', newline='') as csvfile:
-
-    lines = csv.reader(csvfile, delimiter = ',', quotechar = '"')
-    ind=0
-    for line in lines:
-        if ind>0:
-            #print(line[len(line)-5])
-            if line[len(line)-5]=="Confirmado" and line[len(line)-3]!="":
-                all_data.append(line)
-            if line[5]+", "+line[6] not in list(lists.values()):
-                #if line[len(line)-4]+"_"+line[len(line)-2]=="0":
-                #lists[line[len(line)-4]+"_"+line[len(line)-2]]=line[5]+", "+line[6]
-                lists[line[len(line)-4]+"_"+line[len(line)-2]]=line[5]+", "+line[6]
-                #else:
-                #print(lists[line[len(line)-4]+"_"+line[len(line)-2]],line[5]+", "+line[6])
-        else:
-            kkeys=line
-        ind+=1
+#with open(url, 'r', encoding='utf-8', newline='') as csvfile:
+for item in csvfile.iterrows():
+    #lines = csv.reader(csvfile, delimiter = ',', quotechar = '"')
+    #ind=0
+    #for line in lines:
+    #    if ind>0:
+        #print(line[len(line)-5])
+        #print(item[1].values)
+        #print(item[1])
+        if item[1]["clasificacion_resumen"]=="Confirmado" and item[1]['fecha_diagnostico']!="":
+            all_data.append(item[1].values)
+        if item[1]["residencia_provincia_nombre"]+", "+ item[1]["residencia_departamento_nombre"] not in list(lists.values()):
+            lists[str(item[1]['residencia_provincia_id'])+"_"+str(item[1]['residencia_departamento_id'])]=item[1]["residencia_provincia_nombre"]+", "+ item[1]["residencia_departamento_nombre"]
+        
+        #kkeys=list(item[1].keys())
+        
 print(lists)
 '''
+id_evento_caso                             10004440
+sexo                                              F
+edad                                           22.0
+edad_años_meses                                Años
+residencia_pais_nombre              SIN ESPECIFICAR
+residencia_provincia_nombre            Buenos Aires
+residencia_departamento_nombre          José C. Paz
+carga_provincia_nombre                         CABA
+fecha_inicio_sintomas                           NaN
+fecha_apertura                           2021-04-08
+sepi_apertura                                    14
+fecha_internacion                               NaN
+cuidado_intensivo                                NO
+fecha_cui_intensivo                             NaN
+fallecido                                        NO
+fecha_fallecimiento                             NaN
+asistencia_respiratoria_mecanica                 NO
+carga_provincia_id                                2
+origen_financiamiento                       Público
+clasificacion                       Caso Descartado
+clasificacion_resumen                    Descartado
+residencia_provincia_id                           6
+fecha_diagnostico                        2021-03-22
+residencia_departamento_id                      412
+ultima_actualizacion                     2021-11-08
+
+
+['id_evento_caso', 'sexo', 'edad', 'edad_años_meses','residencia_pais_nombre', 'residencia_provincia_nombre','residencia_departamento_nombre', 'carga_provincia_nombre','fecha_inicio_sintomas', 'fecha_apertura', 'sepi_apertura','fecha_internacion', 'cuidado_intensivo', 'fecha_cui_intensivo','fallecido', 'fecha_fallecimiento', 'asistencia_respiratoria_mecanica','carga_provincia_id', 'origen_financiamiento', 'clasificacion','clasificacion_resumen', 'residencia_provincia_id', 'fecha_diagnostico','residencia_departamento_id', 'ultima_actualizacion']
 ['id_evento_caso', 'sexo', 'edad', 'edad_años_meses', 'residencia_pais_nombre', 'residencia_provincia_nombre', 'residencia_departamento_nombre', 'carga_provincia_nombre', 'fecha_inicio_sintomas', 'fecha_apertura', 'sepi_apertura', 'fecha_internacion', 'cuidado_intensivo', 'fecha_cui_intensivo', 'fallecido', 'fecha_fallecimiento', 'asistencia_respiratoria_mecanica', 'carga_provincia_id', 'origen_financiamiento', 'Clasificacion', 'clasificacion_resumen', 'residencia_provincia_id', 'fecha_diagnostico', 'residencia_departamento_id', 'ultima_actualizacion']
 ['672064', 'M', '52', 'Años', 'Argentina', 'Buenos Aires', 'Florencio Varela', 'Buenos Aires', '2020-05-29', '', '44', '', 'NO', '', 'NO', '', 'NO', '06', 'Público', 'Caso Descartado', 'Descartado', '06', '2020-06-01', '274', '2020-06-08']
 '''
