@@ -1,4 +1,3 @@
-
 import os
 #os.system("rm -r /Users/olgabuchel/Downloads/archive")
 #wget https://www.kaggle.com/lisphilar/covid19-dataset-in-japan/download
