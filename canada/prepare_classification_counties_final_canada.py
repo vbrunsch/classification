@@ -7,7 +7,7 @@ from datetime import date
 date_of_analysis=date.today().strftime("%m/%d/%y")
 print(date_of_analysis)
 
-#date_of_analysis='11/16/21'
+date_of_analysis='11/23/21'
 
 output_directory = 'output_canada'
 os.makedirs(output_directory + '/classification', exist_ok=True)
@@ -34,13 +34,13 @@ for x in range(2,13):
 for x in range(1,12):
     if x<10:
         x="0"+str(x)
-    for y in range(1,32):
+    for y in range(1,31):
         if y<10:
             y="0"+str(y)
         if str(y)+"-"+str(x)+"-"+"2021" not in ["29-02-2021","30-02-2021","31-02-2021","31-04-2021","31-06-2021","31-09-2021","31-11-2021"]:
             dates.append(str(y)+"-"+str(x)+"-"+"2021")
 print(dates)            
-dates0=dates[:len(dates)-(31-int(date_of_analysis.split("/")[1]))]        
+dates0=dates[:len(dates)-(30-int(date_of_analysis.split("/")[1]))]        
 
 print(dates0)
 data={}
