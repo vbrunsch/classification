@@ -2,12 +2,25 @@ import json
 import numpy as np
 import pandas as pd
 import os
+import time
 from prep_canada_data import stage_latest
 from datetime import date
 date_of_analysis=date.today().strftime("%m/%d/%y")
 print(date_of_analysis)
-
-date_of_analysis='12/31/21'
+#from datetime import datetime
+import datetime
+from datetime import date
+#datelist = pd.date_range(datetime.today(), periods=100).tolist()
+#print(datelist)
+base = datetime.date.today()-datetime.timedelta(days=2)
+from datetimerange import DateTimeRange
+time_range = DateTimeRange(datetime.date(2020,1,26), base)
+dates=[]
+for value in time_range.range(datetime.timedelta(days=1)):
+    dates.append(value)
+print(dates)
+dates=[x.strftime("%d-%m-%Y") for x in dates]
+#date_of_analysis='12/31/21'
 
 output_directory = 'output_canada'
 os.makedirs(output_directory + '/classification', exist_ok=True)
@@ -21,6 +34,8 @@ if use_canned_file:
 else:
     # Original:
     data = pd.read_csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_US.csv')
+'''
+
 '''
 dates=["25-01-2020","26-01-2020","27-01-2020","28-01-2020","29-01-2020","30-01-2020","31-01-2020"]
 for x in range(2,13):
@@ -39,9 +54,11 @@ for x in range(1,13):
             y="0"+str(y)
         if str(y)+"-"+str(x)+"-"+"2021" not in ["29-02-2021","30-02-2021","31-02-2021","31-04-2021","31-06-2021","31-09-2021","31-11-2021"]:
             dates.append(str(y)+"-"+str(x)+"-"+"2021")
-print(dates)            
+print(dates)
+            
 dates0=dates[:len(dates)-(31-int(date_of_analysis.split("/")[1]))]        
-
+'''
+dates0=dates#.sort(reverse = True)
 print(dates0)
 data={}
 with open('canadian_keys.json', 'r') as outfile:
@@ -58,11 +75,16 @@ recs = list(data.keys())[1:]
 
 # stage latest Canada HR-level data for later processing
 latest_ca_df = stage_latest()
-#print(latest_ca_df)
+print(latest_ca_df)
 assert latest_ca_df.index.names == ['Combined_Key']
 
 e_dataframe0 = latest_ca_df
 print(e_dataframe0)
+
+
+
+
+
 #e_dataframe.drop(columns=['UID','iso2','iso3','code3','FIPS','Admin2','Province_State','Country_Region','Lat','Long_'])
 #print(e_dataframe0.columns.tolist())
 df = e_dataframe0.reindex(columns=dates0)
@@ -168,7 +190,7 @@ def classify(ratio, recent_mean, threshold):
 #print(tim2)
 for name in counties:
     values = e_dataframe1[name].cumsum()
-    #print(name,list(values))
+    print(name,list(values))
     num_rows = len(values)
     y50 = values[-14:]
     y5 = [y - values[-15] for y in y50]
