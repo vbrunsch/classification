@@ -12,7 +12,7 @@ import datetime
 from datetime import date
 #datelist = pd.date_range(datetime.today(), periods=100).tolist()
 #print(datelist)
-base = datetime.date.today()-datetime.timedelta(days=2)
+base = datetime.date.today()-datetime.timedelta(days=1)
 from datetimerange import DateTimeRange
 time_range = DateTimeRange(datetime.date(2020,1,26), base)
 dates=[]

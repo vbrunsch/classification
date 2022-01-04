@@ -13,7 +13,7 @@ while True:
 '''
 #os.system("rm -r /Users/olgabuchel/Downloads/archive")
 #wget https://www.kaggle.com/lisphilar/covid19-dataset-in-japan/download
-
+'''
 os.system("pythonw process_japan.py")
 os.system("python3 prepare_greece_prefactures.py")
 os.system("pythonw /Users/olgabuchel/downloads/decksample/directory/COVID-19_map_final/jhu_fixed.py")
@@ -25,7 +25,7 @@ os.system("print('us')")
 
 #os.system("python3 prepare_classification_counties_argentina.py")
 #os.system("print('argentina')")
-
+'''
 os.system("pythonw prepare_classification_counties_arizona.py")
 os.system("print('arizona')")
 
