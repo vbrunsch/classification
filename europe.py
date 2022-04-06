@@ -95,7 +95,6 @@ print(all_countries)
 
 
 '''
-
 ['France' 'Switzerland' 'United Kingdom' 'Italy' 'Latvia' 'Netherlands'
  'Germany' 'Spain' 'Belgium' 'Estonia' 'Greece' 'Luxembourg' 'Portugal'
  'Hungary' 'Ukraine' 'Austria' 'Liechtenstein' 'Bosnia and Herzegovina'
@@ -104,9 +103,6 @@ print(all_countries)
  'Slovenia' 'Turkey' 'Albania' 'Finland' 'Romania' 'Czech Republic'
  'Iceland' 'Monaco' 'Montenegro' 'Russian Fed.' 'Bulgaria' 'Poland'
  'North Macedonia' 'Armenia']
-
-
-
 for kkey in list(all_countries.keys()):
     df3=all_countries[kkey]
     #.dropna().groupby(["DATE","PROVINCE","REGION"])["CASES"].sum().reset_index()
@@ -355,9 +351,9 @@ def make_big_plot(item0, df7):
             ax.annotate(np.round(np.exp(slope),3), xy=((a+b-2)/2, np.exp((a+b+2)/2*slope + intercept)), fontsize=24, c=('C'+str(i+1)))
         
         ax.set_yscale('log') #turn on/off this line to use log or linear scale        
-        b = np.array([focus.values[-1]], dtype=numpy.float64)#"Schaffhausen, Switzerland"
+        b = np.array([focus.values[-1]])#, dtype=numpy.float64)#"Schaffhausen, Switzerland"
         #if state not in ["Emilia-Romagna, Italy","Campania, Italy","Calabria, Italy","Bolzano, Italy","Basilicata, Italy","Abruzzo, Italy","South West, United Kingdom","South East, United Kingdom","Northern Ireland, United Kingdom","North West, United Kingdom","North East and Yorkshire, United Kingdom", "Solothurn, Switzerland","Obwalden, Switzerland","Uri, Switzerland","Ticino, Switzerland","East of England, United Kingdom","London, United Kingdom","Midlands, United Kingdom","Scotland, United Kingdom"]:        
-        while b[-1] > pop[state] / 1e6 * threshold:
+        while b[-1] > pop[state] / 1e6 * threshold and slope < 0:
             try:
                 b = np.append(b, b[-1]*(1+slope))
             except Exception:
@@ -376,9 +372,14 @@ def make_big_plot(item0, df7):
         #    pass
         ax.tick_params(labelsize=20)
         ax.xaxis.set_major_locator(plt.MaxNLocator(8))
-        ax.set_ylim(bottom=1, )
+        #ax.set_ylim(bottom=1, )
         try:
-            ax.annotate(s=str(len(b))+' days until \ndaily cases\n<'+str(threshold)+' /Mppl', xy=(len(focus)+len(b)-9, 20), fontsize=20, ha='center', c='C4')#len(focus)+len(b)-9                                                                                                                         
+            if len(b)==2:
+              #ax.annotate(s=str(len(b)-1)+' day until \ndaily cases\n<'+str(threshold)+' /Mppl', xy=(len(focus)+len(b)-19, b[0]), fontsize=20, ha='center', c='C4')#len(focus)+len(b)-9
+              ax.annotate(s=str(len(b)-1)+' day until \ndaily cases\n<'+str(threshold)+' /Mppl', xy=(0.9, b[0]), xycoords = ax.get_yaxis_transform(), fontsize=20, ha='center', c='C4')#len(focus)+len(b)-9
+            elif len(b) >2:
+              ax.annotate(s=str(len(b)-1)+' days until \ndaily cases\n<'+str(threshold)+' /Mppl', xy=(0.9, b[0]), xycoords = ax.get_yaxis_transform(), fontsize=20, ha='center', c='C4')#len(focus)+len(b)-9
+                                                                                                                        
         except:
             print(str(len(b))+' days until \ndaily cases\n<'+str(threshold)+' /Mppl')
             #continue
@@ -387,7 +388,7 @@ def make_big_plot(item0, df7):
         plt.tight_layout()
         #plt.show()
         
-        plt.savefig(output_directory + '/classification/'+state+'_1.png')
+        plt.savefig('images/'+state+'_1.png')
         
         plt.close()
     except:
@@ -518,7 +519,7 @@ for kkey in list(all_countries.keys()):
                 ax.xaxis.set_major_locator(plt.MaxNLocator(8))
                 plt.title(name, fontsize=12)
                 plt.tight_layout()
-                plt.savefig(output_directory + '/classification/'+str(ids[recs.index(name)]["Combined_Key"]).split(", ")[0]+"_3.png", dpi=150)
+                plt.savefig('images/'+str(ids[recs.index(name)]["Combined_Key"]).split(", ")[0]+"_3.png", dpi=150)
                 #plt.show()
                 plt.close()
                 
@@ -530,5 +531,3 @@ for kkey in list(all_countries.keys()):
     # this file is used by the map
     with open(output_directory + '/classification/classification_ids_counties2.json', 'w') as outfile:
         json.dump(aar1, outfile)
-
-
