@@ -334,7 +334,16 @@ x.add(option);
     
     //document.getElementById("subject").value="Switzerland";
   //  document.getElementById("topic").value="Geneva";
+    //document.querySelector('select[id=subject]')
     
+     var select = document.querySelector('select[id=subject]');
+    select.value = 'Switzerland';
+
+    /* since programatically changes won't fire the change event,
+       we need to do it ourselves */
+    var event = document.createEvent("HTMLEvents");
+    event.initEvent("change",true,false);
+    select.dispatchEvent(event);
     
  //   }
     
