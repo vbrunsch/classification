@@ -313,7 +313,11 @@ x.add(option);
      */ 
       getMeta(
   "https://obuchel.github.io/classification/output_"+document.getElementById("subject").value.toLowerCase()+"/classification/"+document.getElementById("topic").value+", "+document.getElementById("subject").value+"_1.png",
-  function(width, height) { alert(width + 'px ' + height + 'px') }
+  function(width, height) { 
+      
+      console.log(width + 'px ' + height + 'px');
+  
+  }
 );
       
 
