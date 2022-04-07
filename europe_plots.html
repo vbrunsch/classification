@@ -74,7 +74,7 @@ Province/state/region: <select name="topic" id="topic">
     
 <script>
     
-         $(document).on("load", function() {
+       //  $(document).on("load", function() {
     var all_countries=['Norway','Finland','Romania', 'Czech Republic','Montenegro'];
 
 var pop={"Aargau, Switzerland":678207, "Zug, Switzerland":29804, "Uri, Switzerland":36433,"Jura, Switzerland":73419, "Graubünden, Switzerland":198379, "Vaud, Switzerland":799145, "Thurgau, Switzerland":282909, "Ticino, Switzerland":350986, "St. Gallen, Switzerland": 75481, "Uri, Switzerland":60439692,'Solothurn, Switzerland': 16163,'Basel City, Switzerland': 194766, 'Appenzell Ausserrhoden, Switzerland': 55234 , 'Basel Country, Switzerland': 171017, 'Bern, Switzerland':  133115, 'Fribourg, Switzerland': 38829, 'Geneva, Switzerland': 198979,'Glarus, Switzerland': 12425, 'Liechtenstein, Switzerland': 38896,'Lucerne, Switzerland':         81691, 'Neuchâtel, Switzerland': 32819,'Nidwalden, Switzerland': 43223, 'Obwalden, Switzerland': 37841,'Schaffhausen, Switzerland': 36587, 'Schwyz, Switzerland': 14183,
@@ -336,16 +336,16 @@ x.add(option);
   //  document.getElementById("topic").value="Geneva";
     //document.querySelector('select[id=subject]')
   
-     var select = document.querySelector('select[id=subject]');
+ /*    var select = document.querySelector('select[id=subject]');
     select.value = 'Switzerland';
 
     /* since programatically changes won't fire the change event,
        we need to do it ourselves */
-    var event = document.createEvent("HTMLEvents");
+ /*   var event = document.createEvent("HTMLEvents");
     event.initEvent("change",true,false);
     select.dispatchEvent(event);
           
-      });
+      });*/
     
  //   }
     
