@@ -1,4 +1,3 @@
-
 from scipy import optimize
 import datetime
 #https://static.data.gouv.fr/resources/donnees-relatives-aux-resultats-des-tests-virologiques-covid-19/20200829-191505/sp-pos-quot-dep-2020-08-29-19h15.csv
@@ -89,7 +88,7 @@ slovenia=df[df["CountryName"]=="Slovenia"]
 #print(slovenia)
 print(df["CountryName"].unique())
 
-all_countries={'Norway':norway,'Finland':finland,'Romania':romania, 'Czech Republic':czech,'Montenegro':montenegro}#{'Austria':austria,'Luxembourg':luxembourg, 'Switzerland':switzerland, 'United Kingdom':uk, 'Italy':italy}#,'Luxembourg':luxembourg,'Hungary':hungary, 'Austria':austria,'Bosnia and Herzegovina':bh,'Slovakia':slovakia, 'Malta':malta,'Norway':norway, 'Andorra':andorra,'Cyprus':cyprus, 'Denmark':denmark,'Slovenia':slovenia, 'Albania':albania, 'Finland':finland, 'Romania':romania, 'Czech Republic':czech,'Montenegro':montenegro, 'Poland':poland}#'Liechtenstein':lch,'Portugal':portugal,'Croatia':croatia,'San Marino':san_marino,'Serbia':serbia,'Bulgaria':bulgaria,'North Macedonia':nmacedonia}
+all_countries={'Norway':norway,'Finland':finland,'Romania':romania, 'Czech Republic':czech,'Montenegro':montenegro,'Austria':austria,'Luxembourg':luxembourg, 'Switzerland':switzerland, 'United Kingdom':uk, 'Italy':italy}#,'Luxembourg':luxembourg,'Hungary':hungary, 'Austria':austria,'Bosnia and Herzegovina':bh,'Slovakia':slovakia, 'Malta':malta,'Norway':norway, 'Andorra':andorra,'Cyprus':cyprus, 'Denmark':denmark,'Slovenia':slovenia, 'Albania':albania, 'Finland':finland, 'Romania':romania, 'Czech Republic':czech,'Montenegro':montenegro, 'Poland':poland}#'Liechtenstein':lch,'Portugal':portugal,'Croatia':croatia,'San Marino':san_marino,'Serbia':serbia,'Bulgaria':bulgaria,'North Macedonia':nmacedonia}
 print(all_countries)
 
 
@@ -343,14 +342,17 @@ def make_big_plot(item0, df7):
         focus = focus['cases'].diff()[-offset_days:]
         title = state
         fig, ax = plt.subplots(nrows=1, ncols=1, sharey=True, figsize=(16,9))
-        ax.plot(focus.index, focus.values, alpha=0.3)#, label=r'Daily cases in %s'%title)                                                                          
-        ax.plot(focus.rolling(window=7, min_periods=1, center=True).mean(), c='green',alpha=0.3, ls='--')
+        ax.plot(focus.index, focus.values, alpha=0.5, linewidth=2)#, label=r'Daily cases in %s'%title)                                                                          
+        ax.plot(focus.rolling(window=7, min_periods=1, center=True).mean(), c='green',alpha=0.4, ls='--', linewidth = 2)
         for i,(a,b) in enumerate(days):
             slope, intercept = optimize.curve_fit(linear_fit, np.arange(a,b), np.log(focus.values[a:b]+1))[0]
-            ax.plot(np.arange(a,b), np.exp(np.arange(a,b)*slope + intercept), c=('C'+str(i+1)))
-            ax.annotate(np.round(np.exp(slope),3), xy=((a+b-2)/2, np.exp((a+b+2)/2*slope + intercept)), fontsize=24, c=('C'+str(i+1)))
+            if focus.values[a:b].mean() > 10:  
+              ax.plot(np.arange(a,b), np.exp(np.arange(a,b)*slope + intercept), c=('C'+str(i+1)))
+              ax.annotate(np.round(np.exp(slope),3), xy=((a+b-2)/2, np.exp((a+b+2)/2*slope + intercept)), fontsize=24, c=('C'+str(i+1)))
+          
+        if focus.values[a:b].mean() > 10:
+          ax.set_yscale('log') #turn on/off this line to use log or linear scale        
         
-        ax.set_yscale('log') #turn on/off this line to use log or linear scale        
         b = np.array([focus.values[-1]])#, dtype=numpy.float64)#"Schaffhausen, Switzerland"
         #if state not in ["Emilia-Romagna, Italy","Campania, Italy","Calabria, Italy","Bolzano, Italy","Basilicata, Italy","Abruzzo, Italy","South West, United Kingdom","South East, United Kingdom","Northern Ireland, United Kingdom","North West, United Kingdom","North East and Yorkshire, United Kingdom", "Solothurn, Switzerland","Obwalden, Switzerland","Uri, Switzerland","Ticino, Switzerland","East of England, United Kingdom","London, United Kingdom","Midlands, United Kingdom","Scotland, United Kingdom"]:        
         while b[-1] > pop[state] / 1e6 * threshold and slope < 0:
@@ -366,11 +368,11 @@ def make_big_plot(item0, df7):
             ax.plot(np.arange(len(focus),len(focus)+len(b)), b, ls='-.', c='C4')
         except:
             pass
-        ax.legend(prop={'size': 30})
+        ax.legend(prop={'size': 20})
         #except  Exception:
         #    #print("An exception occurred")
         #    pass
-        ax.tick_params(labelsize=20)
+        ax.tick_params(labelsize=22)
         ax.xaxis.set_major_locator(plt.MaxNLocator(8))
         #ax.set_ylim(bottom=1, )
         try:
@@ -384,7 +386,7 @@ def make_big_plot(item0, df7):
             print(str(len(b))+' days until \ndaily cases\n<'+str(threshold)+' /Mppl')
             #continue
         
-        plt.title(state, fontsize=20)
+        plt.title(state, fontsize=30)
         plt.tight_layout()
         #plt.show()
         
@@ -513,11 +515,12 @@ for kkey in list(all_countries.keys()):
                 make_big_plot(name, dda)
                 
                 fig, ax = plt.subplots(nrows=1, ncols=1, sharey=True, figsize=(16,9)) 
-                ax.plot(dda["date"],tt)
-                ax.plot(dda["date"],original_values,c='C4')
-                ax.tick_params(labelsize=12)
+                ax.plot(dda["date"],tt, label = '20 cases')
+                ax.legend(prop={'size': 20}, loc='upper left')
+                ax.plot(dda["date"],original_values,c='C4', linewidth = 2)
+                ax.tick_params(labelsize=25)
                 ax.xaxis.set_major_locator(plt.MaxNLocator(8))
-                plt.title(name, fontsize=12)
+                plt.title(name, fontsize=30)
                 plt.tight_layout()
                 plt.savefig('images/'+str(ids[recs.index(name)]["Combined_Key"]).split(", ")[0]+"_3.png", dpi=150)
                 #plt.show()
